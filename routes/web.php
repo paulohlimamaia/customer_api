@@ -1,5 +1,7 @@
 <?php
 
+use App\Customer;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,5 +14,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('welcome', ['customers' => Customer::all()]);
+});
+
+Route::get('/customer/{id}', function($id) {
+    return view('details', ['customer' => Customer::find($id)]);
 });
