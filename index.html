@@ -1,0 +1,27 @@
+<div id="content"></div>
+
+<script>
+    fetch('http://127.0.0.1:8000/api/customer').then(function(res){
+        res.json().then(data => {
+            data.customers.forEach(element => {
+
+                console.log(element)
+
+                let newDiv = document.createElement('div');
+                newDiv.appendChild(document.createTextNode(element.id + "|"));
+                newDiv.appendChild(document.createTextNode(element.first_name + "|"));
+                newDiv.appendChild(document.createTextNode(element.last_name + "|"));
+                newDiv.appendChild(document.createTextNode(element.title + "|"));
+                newDiv.appendChild(document.createTextNode(element.email + "|"));
+                newDiv.appendChild(document.createTextNode(element.company + "|"));
+                newDiv.appendChild(document.createTextNode(element.gender + "|"));
+                newDiv.appendChild(document.createTextNode(element.city + "|"));
+                newDiv.appendChild(document.createTextNode(element.latitude + "|"));
+                newDiv.appendChild(document.createTextNode(element.longitude + "|"));
+
+                let div = document.getElementById('content');
+                div.appendChild(newDiv);
+            });
+        });
+    })
+</script>
