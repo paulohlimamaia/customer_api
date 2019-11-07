@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
+
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<title>Customers Front</title>
+</head>
+
+<body>
+        <div id="content">
+            <table id="table">
+                <th>id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Title</th>
+                <th>E-Mail</th>
+                <th>Gender</th>
+                <th>Company</th>
+                <th>City</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>-</th>
+            </table>
+        </div>
+        
+        <script>
+
+            var url = new URL(window.location.href);
+            var id = url.searchParams.get("id");
+
+            fetch('http://127.0.0.1:8000/api/customer/'+id).then(function(res){
+                res.json().then(data => {
+
+                    let table = document.getElementById('table');
+
+                    let newTr = document.createElement('tr');
+        
+                    var newtdId = document.createElement('td');
+                    newtdId.appendChild(document.createTextNode(data.customer.id));
+                    var newtdFirst = document.createElement('td');
+                    newtdFirst.appendChild(document.createTextNode(data.customer.first_name));
+                    var newtdLast = document.createElement('td');
+                    newtdLast.appendChild(document.createTextNode(data.customer.last_name));
+                    var newtdTitle = document.createElement('td');
+                    newtdTitle.appendChild(document.createTextNode(data.customer.title))
+                    var newtdEmail = document.createElement('td');
+                    newtdEmail.appendChild(document.createTextNode(data.customer.email));
+                    var newtdGender = document.createElement('td');
+                    newtdGender.appendChild(document.createTextNode(data.customer.gender));
+                    var newtdCompany = document.createElement('td');
+                    newtdCompany.appendChild(document.createTextNode(data.customer.company));
+                    var newtdCity = document.createElement('td');
+                    newtdCity.appendChild(document.createTextNode(data.customer.city));
+                    var newtdLatitude = document.createElement('td');
+                    newtdLatitude.appendChild(document.createTextNode(data.customer.latitude));
+                    var newtdLongitude = document.createElement('td');
+                    newtdLongitude.appendChild(document.createTextNode(data.customer.longitude));
+
+                    var newTdButton = document.createElement('td');
+                    var button = document.createElement('button');
+                    button.innerHTML = 'Back';
+                    button.onclick = function(){
+                        let url = window.location.href.replace("details.html", "index.html");
+                        window.location=url.substring(0, url.indexOf('?'));
+                    };
+                    newTdButton.appendChild(button);
+    
+                    newTr.appendChild(newtdId);
+                    newTr.appendChild(newtdFirst);
+                    newTr.appendChild(newtdLast);
+                    newTr.appendChild(newtdTitle);
+                    newTr.appendChild(newtdEmail);
+                    newTr.appendChild(newtdGender);
+                    newTr.appendChild(newtdCompany);
+                    newTr.appendChild(newtdCity);
+                    newTr.appendChild(newtdLatitude);
+                    newTr.appendChild(newtdLongitude);
+                    newTr.appendChild(newTdButton);
+    
+                    table.appendChild(newTr);
+                });
+            })
+        </script>
+</body>
+</html> 

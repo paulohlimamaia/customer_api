@@ -1,27 +1,79 @@
-<div id="content"></div>
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+<head>
+<meta charset="UTF-8" />
+<style>
+    table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
 
-<script>
-    fetch('http://127.0.0.1:8000/api/customer').then(function(res){
-        res.json().then(data => {
-            data.customers.forEach(element => {
+    td, th {
+        border: 1px solid #dddddd;
+        text-align: left;
+        padding: 8px;
+    }
 
-                console.log(element)
+    tr:nth-child(even) {
+        background-color: #dddddd;
+    }
+</style>
+<title>Customers Front</title>
+</head>
 
-                let newDiv = document.createElement('div');
-                newDiv.appendChild(document.createTextNode(element.id + "|"));
-                newDiv.appendChild(document.createTextNode(element.first_name + "|"));
-                newDiv.appendChild(document.createTextNode(element.last_name + "|"));
-                newDiv.appendChild(document.createTextNode(element.title + "|"));
-                newDiv.appendChild(document.createTextNode(element.email + "|"));
-                newDiv.appendChild(document.createTextNode(element.company + "|"));
-                newDiv.appendChild(document.createTextNode(element.gender + "|"));
-                newDiv.appendChild(document.createTextNode(element.city + "|"));
-                newDiv.appendChild(document.createTextNode(element.latitude + "|"));
-                newDiv.appendChild(document.createTextNode(element.longitude + "|"));
-
-                let div = document.getElementById('content');
-                div.appendChild(newDiv);
-            });
-        });
-    })
-</script>
+<body>
+        <div id="content">
+            <table id="table">
+                <th>id</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Title</th>
+                <th>E-Mail</th>
+                <th>-</th>
+            </table>
+        </div>
+        
+        <script>
+            fetch('http://127.0.0.1:8000/api/customer').then(function(res){
+                res.json().then(data => {
+        
+                    let table = document.getElementById('table');
+        
+                    data.customers.forEach(element => {
+        
+                        let newTr = document.createElement('tr');
+        
+                        var newtdId = document.createElement('td');
+                        newtdId.appendChild(document.createTextNode(element.id));
+                        var newtdFirst = document.createElement('td');
+                        newtdFirst.appendChild(document.createTextNode(element.first_name));
+                        var newtdLast = document.createElement('td');
+                        newtdLast.appendChild(document.createTextNode(element.last_name));
+                        var newtdTitle = document.createElement('td');
+                        newtdTitle.appendChild(document.createTextNode(element.title))
+                        var newtdEmail = document.createElement('td');
+                        newtdEmail.appendChild(document.createTextNode(element.email));
+        
+                        var newTdButton = document.createElement('td');
+                        var button = document.createElement('button');
+                        button.innerHTML = 'Details';
+                        button.onclick = function(){
+                            window.location=window.location.href.replace("index.html", "details.html")+"?id="+element.id;
+                        };
+                        newTdButton.appendChild(button);
+        
+                        newTr.appendChild(newtdId);
+                        newTr.appendChild(newtdFirst);
+                        newTr.appendChild(newtdLast);
+                        newTr.appendChild(newtdTitle);
+                        newTr.appendChild(newtdEmail);
+                        newTr.appendChild(newTdButton);
+        
+                        table.appendChild(newTr);
+                    });
+                });
+            })
+        </script>
+</body>
+</html> 
